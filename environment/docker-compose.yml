@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  digdag:
+    container_name: digdag
+    build:
+      context: .
+      dockerfile: docker/digdag/Dockerfile
+      args:
+        - ENV_MODE=$ENV_MODE
+        - POSTGRES_DB=$POSTGRES_DB
+        - POSTGRES_USER=$POSTGRES_USER
+        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+        - POSTGRES_PORT=$POSTGRES_PORT
+        - POSTGRES_HOST=$POSTGRES_HOST
+    depends_on:
+      - digdag_db
+    tty: true
+    volumes:
+      - ../src/digdag:/digdag
+
+  digdag_db:
+    container_name: digdag_db
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+      args:
+        - ENV_MODE=$ENV_MODE
+        - POSTGRES_DB=$POSTGRES_DB
+        - POSTGRES_USER=$POSTGRES_USER
+        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    ports:
+      - 5432:5432
+#    restart: always
+    volumes:
+      - ./dockerfile/postgres/initdb.d:/docker-entrypoint-initdb.d
+      - digdag_db_volume:/var/lib/postgresql/data
+
+volumes:
+  digdag_db_volume:
