@@ -32,9 +32,9 @@ services:
     ports:
       - 5432:5432
 #    restart: always
-    volumes:
-      - ./dockerfile/postgres/initdb.d:/docker-entrypoint-initdb.d
-      - digdag_db_volume:/var/lib/postgresql/data
+#    volumes:
+#      - ./docker/postgres/initdb.d:/docker-entrypoint-initdb.d
+#      - digdag_db_volume:/var/lib/postgresql/data
 
-volumes:
-  digdag_db_volume:
+#volumes:
+#  digdag_db_volume:

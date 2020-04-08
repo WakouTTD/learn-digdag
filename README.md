@@ -7,7 +7,7 @@ digdag学習用
 cd environment 
 
 
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 

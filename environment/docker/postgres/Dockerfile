@@ -14,5 +14,9 @@ ENV POSTGRES_USER=$POSTGRES_USER \
     POSTGRES_DB=$POSTGRES_DB \
     LOG_TYPE=local
 
+
+COPY ./docker/postgres/initdb.d /docker-entrypoint-initdb.d/
+RUN chmod a+r /docker-entrypoint-initdb.d/*
+
 RUN apk --no-cache update && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
